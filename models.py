@@ -56,9 +56,9 @@ def create_tables():
         canvas_finish TEXT,
         customization TEXT,
         commission_order INTEGER,
+        gift_wrap INTEGER,
         final_price REAL,
         order_date TEXT,
-
         FOREIGN KEY (artwork_id) REFERENCES artworks(artwork_id)
     )
     """)
@@ -67,6 +67,23 @@ def create_tables():
     conn.close()
 
     print("Database schema created successfully!")
+
+def delete_artwork_by_id(artwork_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM artworks WHERE artwork_id = ?",
+        (artwork_id,)
+    )
+
+    conn.commit()
+
+    deleted = cursor.rowcount > 0
+
+    conn.close()
+
+    return deleted
 
 
 if __name__ == "__main__":

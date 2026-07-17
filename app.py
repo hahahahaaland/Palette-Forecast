@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from db import get_connection
 
 app = Flask(__name__)
@@ -167,6 +167,106 @@ def add_artwork():
     return {
         "message": "Artwork added successfully",
         "artwork_id": artwork_id
+    }, 201
+
+@app.route("/artworks/<int:artwork_id>", methods=["PUT"])
+def update_artwork(artwork_id):
+    data = request.get_json()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE artworks
+        SET
+            title=?,
+            artist_id=?,
+            style_id=?,
+            medium_id=?,
+            base_price=?,
+            status=?,
+            created_date=?
+        WHERE artwork_id=?
+    """, (
+        data["title"],
+        data["artist_id"],
+        data["style_id"],
+        data["medium_id"],
+        data["base_price"],
+        data["status"],
+        data["created_date"],
+        artwork_id
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Artwork updated successfully"})
+
+@app.route("/artworks/<int:artwork_id>", methods=["DELETE"])
+def delete_artwork(artwork_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM artworks WHERE artwork_id=?",
+        (artwork_id,)
+    )
+
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        conn.close()
+        return {"error": "Artwork not found"}, 404
+
+    conn.close()
+
+    return {"message": "Artwork deleted successfully"}
+
+@app.route("/orders", methods=["POST"])
+def add_order():
+    data = request.get_json()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO orders
+        (
+            artwork_id,
+            customer_name,
+            size,
+            frame_type,
+            canvas_finish,
+            customization,
+            commission_order,
+            gift_wrap,
+            final_price,
+            order_date
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        data["artwork_id"],
+        data["customer_name"],
+        data["size"],
+        data["frame_type"],
+        data["canvas_finish"],
+        data["customization"],
+        data["commission_order"],
+        data["gift_wrap"],
+        data["final_price"],
+        data["order_date"]
+    ))
+
+    conn.commit()
+
+    order_id = cursor.lastrowid
+
+    conn.close()
+
+    return {
+        "message": "Order created successfully",
+        "order_id": order_id
     }, 201
 
 
