@@ -355,5 +355,163 @@ def delete_order(order_id):
 
     return {"message": "Order deleted successfully"}
 
+@app.route("/analytics/revenue", methods=["GET"])
+def revenue_summary():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            COUNT(*) AS total_orders,
+            SUM(final_price) AS total_revenue,
+            AVG(final_price) AS average_order_value
+        FROM orders
+    """)
+
+    summary = dict(cursor.fetchone())
+
+    conn.close()
+
+    return jsonify(summary)
+
+@app.route("/analytics/top-artist", methods=["GET"])
+def top_artist():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            ar.name AS artist,
+            COUNT(o.order_id) AS total_orders,
+            SUM(o.final_price) AS revenue
+        FROM orders o
+        JOIN artworks aw ON o.artwork_id = aw.artwork_id
+        JOIN artists ar ON aw.artist_id = ar.artist_id
+        GROUP BY ar.artist_id
+        ORDER BY revenue DESC
+        LIMIT 1
+    """)
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        return jsonify(dict(result))
+
+    return jsonify({"message": "No order data available"})
+
+@app.route("/analytics/top-style", methods=["GET"])
+def top_style():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            s.style_name,
+            COUNT(o.order_id) AS total_orders,
+            SUM(o.final_price) AS revenue
+        FROM orders o
+        JOIN artworks aw ON o.artwork_id = aw.artwork_id
+        JOIN styles s ON aw.style_id = s.style_id
+        GROUP BY s.style_id
+        ORDER BY total_orders DESC
+        LIMIT 1
+    """)
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        return jsonify(dict(result))
+
+    return jsonify({"message": "No style data available"})
+
+@app.route("/analytics/top-medium", methods=["GET"])
+def top_medium():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            m.medium_name,
+            COUNT(o.order_id) AS total_orders,
+            SUM(o.final_price) AS revenue
+        FROM orders o
+        JOIN artworks aw ON o.artwork_id = aw.artwork_id
+        JOIN mediums m ON aw.medium_id = m.medium_id
+        GROUP BY m.medium_id
+        ORDER BY total_orders DESC
+        LIMIT 1
+    """)
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        return jsonify(dict(result))
+
+    return jsonify({"message": "No medium data available"})
+
+@app.route("/analytics/artwork-status", methods=["GET"])
+def artwork_status():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            status,
+            COUNT(*) AS total_artworks
+        FROM artworks
+        GROUP BY status
+        ORDER BY total_artworks DESC
+    """)
+
+    results = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return jsonify(results)
+
+@app.route("/analytics/gift-wrap", methods=["GET"])
+def gift_wrap_statistics():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            gift_wrap,
+            COUNT(*) AS total_orders
+        FROM orders
+        GROUP BY gift_wrap
+    """)
+
+    result = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return jsonify(result)
+
+@app.route("/analytics/commissions", methods=["GET"])
+def commission_statistics():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            commission_order,
+            COUNT(*) AS total_orders
+        FROM orders
+        GROUP BY commission_order
+    """)
+
+    result = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return jsonify(result)
+
 if __name__ == "__main__":
     app.run(debug=True)
