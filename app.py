@@ -223,6 +223,32 @@ def delete_artwork(artwork_id):
 
     return {"message": "Artwork deleted successfully"}
 
+@app.route("/orders", methods=["GET"])
+def get_orders():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            order_id,
+            artwork_id,
+            customer_name,
+            size,
+            frame_type,
+            canvas_finish,
+            customization,
+            commission_order,
+            final_price,
+            order_date
+        FROM orders
+    """)
+
+    orders = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return orders
+
 @app.route("/orders", methods=["POST"])
 def add_order():
     data = request.get_json()
@@ -269,6 +295,65 @@ def add_order():
         "order_id": order_id
     }, 201
 
+@app.route("/orders/<int:order_id>", methods=["PUT"])
+def update_order(order_id):
+    data = request.get_json()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE orders
+        SET
+            artwork_id=?,
+            customer_name=?,
+            size=?,
+            frame_type=?,
+            canvas_finish=?,
+            customization=?,
+            commission_order=?,
+            gift_wrap=?,
+            final_price=?,
+            order_date=?
+        WHERE order_id=?
+    """, (
+        data["artwork_id"],
+        data["customer_name"],
+        data["size"],
+        data["frame_type"],
+        data["canvas_finish"],
+        data["customization"],
+        data["commission_order"],
+        data["gift_wrap"],
+        data["final_price"],
+        data["order_date"],
+        order_id
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return {"message": "Order updated successfully"}
+
+@app.route("/orders/<int:order_id>", methods=["DELETE"])
+def delete_order(order_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM orders WHERE order_id=?",
+        (order_id,)
+    )
+
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        conn.close()
+        return {"error": "Order not found"}, 404
+
+    conn.close()
+
+    return {"message": "Order deleted successfully"}
 
 if __name__ == "__main__":
     app.run(debug=True)
