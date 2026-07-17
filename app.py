@@ -114,6 +114,61 @@ def delete_artist(artist_id):
 
     return {"message": "Artist deleted successfully."}
 
+@app.route("/artworks", methods=["GET"])
+def get_artworks():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            a.artwork_id,
+            a.title,
+            ar.name AS artist,
+            s.style_name,
+            m.medium_name,
+            a.base_price,
+            a.status
+        FROM artworks a
+        JOIN artists ar ON a.artist_id = ar.artist_id
+        JOIN styles s ON a.style_id = s.style_id
+        JOIN mediums m ON a.medium_id = m.medium_id
+    """)
+
+    artworks = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return artworks
+
+@app.route("/artworks", methods=["POST"])
+def add_artwork():
+    data = request.get_json()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO artworks
+        (title, artist_id, style_id, medium_id, base_price, status)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        data["title"],
+        data["artist_id"],
+        data["style_id"],
+        data["medium_id"],
+        data["base_price"],
+        data["status"]
+    ))
+
+    conn.commit()
+    artwork_id = cursor.lastrowid
+    conn.close()
+
+    return {
+        "message": "Artwork added successfully",
+        "artwork_id": artwork_id
+    }, 201
+
 
 if __name__ == "__main__":
     app.run(debug=True)
