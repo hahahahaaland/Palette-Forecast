@@ -355,6 +355,114 @@ def delete_order(order_id):
 
     return {"message": "Order deleted successfully"}
 
+@app.route("/styles", methods=["GET"])
+def get_styles():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM styles")
+
+    styles = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return jsonify(styles)
+
+@app.route("/styles/<int:style_id>", methods=["GET"])
+def get_style(style_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT * FROM styles WHERE style_id=?",
+        (style_id,)
+    )
+
+    style = cursor.fetchone()
+
+    conn.close()
+
+    if style:
+        return jsonify(dict(style))
+
+    return jsonify({"error": "Style not found"}), 404
+
+@app.route("/styles", methods=["POST"])
+def add_style():
+    data = request.get_json()
+
+    style_name = data.get("style_name")
+
+    if not style_name:
+        return jsonify({"error": "Style name is required"}), 400
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO styles(style_name) VALUES(?)",
+        (style_name,)
+    )
+
+    conn.commit()
+
+    style_id = cursor.lastrowid
+
+    conn.close()
+
+    return jsonify({
+        "message": "Style added successfully",
+        "style_id": style_id
+    }), 201
+
+@app.route("/styles/<int:style_id>", methods=["PUT"])
+def update_style(style_id):
+    data = request.get_json()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE styles
+        SET style_name=?
+        WHERE style_id=?
+    """, (
+        data["style_name"],
+        style_id
+    ))
+
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        conn.close()
+        return jsonify({"error": "Style not found"}), 404
+
+    conn.close()
+
+    return jsonify({"message": "Style updated successfully"})
+
+@app.route("/styles/<int:style_id>", methods=["DELETE"])
+def delete_style(style_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM styles WHERE style_id=?",
+        (style_id,)
+    )
+
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        conn.close()
+        return jsonify({"error": "Style not found"}), 404
+
+    conn.close()
+
+    return jsonify({"message": "Style deleted successfully"})
+
+
+
 @app.route("/analytics/revenue", methods=["GET"])
 def revenue_summary():
     conn = get_connection()
@@ -512,6 +620,54 @@ def commission_statistics():
     conn.close()
 
     return jsonify(result)
+
+@app.route("/dashboard", methods=["GET"])
+def dashboard():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # Artists
+    cursor.execute("SELECT COUNT(*) AS total FROM artists")
+    total_artists = cursor.fetchone()["total"]
+
+    # Artworks
+    cursor.execute("SELECT COUNT(*) AS total FROM artworks")
+    total_artworks = cursor.fetchone()["total"]
+
+    # Orders
+    cursor.execute("SELECT COUNT(*) AS total FROM orders")
+    total_orders = cursor.fetchone()["total"]
+
+    # Revenue
+    cursor.execute("SELECT COALESCE(SUM(final_price), 0) AS revenue FROM orders")
+    total_revenue = cursor.fetchone()["revenue"]
+
+    # Available artworks
+    cursor.execute("""
+        SELECT COUNT(*) AS total
+        FROM artworks
+        WHERE status='Available'
+    """)
+    available_artworks = cursor.fetchone()["total"]
+
+    # Sold artworks
+    cursor.execute("""
+        SELECT COUNT(*) AS total
+        FROM artworks
+        WHERE status='Sold'
+    """)
+    sold_artworks = cursor.fetchone()["total"]
+
+    conn.close()
+
+    return jsonify({
+        "total_artists": total_artists,
+        "total_artworks": total_artworks,
+        "total_orders": total_orders,
+        "total_revenue": total_revenue,
+        "available_artworks": available_artworks,
+        "sold_artworks": sold_artworks
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)
