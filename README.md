@@ -49,6 +49,30 @@ The project goes beyond basic CRUD operations by combining inventory management 
 
 ---
 
+## Frontend
+
+The project also includes a React + Tailwind CSS frontend that connects to the Flask backend through REST APIs.
+
+### Technologies Used
+
+- React (Vite)
+- Tailwind CSS
+- Axios
+- React Router DOM
+
+### Frontend Features
+
+- Dashboard displaying business statistics
+- Artists page with artist listing
+- Artworks page with artwork inventory
+- Orders page displaying customer orders
+- Analytics page connected to backend analytics APIs
+- Responsive navigation using React Router
+- Customized pastel UI theme with a handwritten logo font
+- Integration with Flask REST APIs using Axios
+
+The frontend communicates with the backend running on Flask and dynamically displays data stored in the SQLite database.
+
 # Database Design
 
 The application uses SQLite with the following relational tables:
