@@ -461,6 +461,112 @@ def delete_style(style_id):
 
     return jsonify({"message": "Style deleted successfully"})
 
+@app.route("/mediums", methods=["GET"])
+def get_mediums():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM mediums")
+
+    mediums = [dict(row) for row in cursor.fetchall()]
+
+    conn.close()
+
+    return jsonify(mediums)
+
+@app.route("/mediums/<int:medium_id>", methods=["GET"])
+def get_medium(medium_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT * FROM mediums WHERE medium_id=?",
+        (medium_id,)
+    )
+
+    medium = cursor.fetchone()
+
+    conn.close()
+
+    if medium:
+        return jsonify(dict(medium))
+
+    return jsonify({"error": "Medium not found"}), 404
+
+@app.route("/mediums", methods=["POST"])
+def add_medium():
+    data = request.get_json()
+
+    medium_name = data.get("medium_name")
+
+    if not medium_name:
+        return jsonify({"error": "Medium name is required"}), 400
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO mediums(medium_name) VALUES(?)",
+        (medium_name,)
+    )
+
+    conn.commit()
+
+    medium_id = cursor.lastrowid
+
+    conn.close()
+
+    return jsonify({
+        "message": "Medium added successfully",
+        "medium_id": medium_id
+    }), 201
+
+@app.route("/mediums/<int:medium_id>", methods=["PUT"])
+def update_medium(medium_id):
+    data = request.get_json()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE mediums
+        SET medium_name=?
+        WHERE medium_id=?
+    """, (
+        data["medium_name"],
+        medium_id
+    ))
+
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        conn.close()
+        return jsonify({"error": "Medium not found"}), 404
+
+    conn.close()
+
+    return jsonify({"message": "Medium updated successfully"})
+
+@app.route("/mediums/<int:medium_id>", methods=["DELETE"])
+def delete_medium(medium_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM mediums WHERE medium_id=?",
+        (medium_id,)
+    )
+
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        conn.close()
+        return jsonify({"error": "Medium not found"}), 404
+
+    conn.close()
+
+    return jsonify({"message": "Medium deleted successfully"})
+
 
 
 @app.route("/analytics/revenue", methods=["GET"])
