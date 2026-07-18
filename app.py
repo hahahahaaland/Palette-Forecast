@@ -55,8 +55,20 @@ def add_artist():
     experience = data.get("experience")
     country = data.get("country")
 
-    if not all([name, specialization, experience, country]):
-        return {"error": "All fields are required."}, 400
+    if not name:
+    return {"error": "Artist name is required."}, 400
+
+if not specialization:
+    return {"error": "Specialization is required."}, 400
+
+if experience is None:
+    return {"error": "Experience is required."}, 400
+
+if experience < 0:
+    return {"error": "Experience cannot be negative."}, 400
+
+if not country:
+    return {"error": "Country is required."}, 400
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -143,6 +155,19 @@ def get_artworks():
 @app.route("/artworks", methods=["POST"])
 def add_artwork():
     data = request.get_json()
+
+if not data["title"]:
+    return {"error": "Title is required."}, 400
+
+if data["base_price"] <= 0:
+    return {"error": "Base price must be greater than zero."}, 400
+
+valid_status = ["Available", "Sold", "Reserved"]
+
+if data["status"] not in valid_status:
+    return {
+        "error": "Status must be Available, Sold or Reserved."
+    }, 400
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -252,6 +277,18 @@ def get_orders():
 @app.route("/orders", methods=["POST"])
 def add_order():
     data = request.get_json()
+
+    if not data["customer_name"]:
+    return {"error": "Customer name is required."}, 400
+
+if data["final_price"] <= 0:
+    return {"error": "Final price must be greater than zero."}, 400
+
+if data["commission_order"] not in [0, 1]:
+    return {"error": "Commission order must be 0 or 1."}, 400
+
+if data["gift_wrap"] not in [0, 1]:
+    return {"error": "Gift wrap must be 0 or 1."}, 400
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -393,8 +430,8 @@ def add_style():
 
     style_name = data.get("style_name")
 
-    if not style_name:
-        return jsonify({"error": "Style name is required"}), 400
+    if not style_name or not style_name.strip():
+    return {"error": "Style name is required."}, 400
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -499,8 +536,8 @@ def add_medium():
 
     medium_name = data.get("medium_name")
 
-    if not medium_name:
-        return jsonify({"error": "Medium name is required"}), 400
+    if not medium_name or not medium_name.strip():
+    return {"error": "Medium name is required."}, 400
 
     conn = get_connection()
     cursor = conn.cursor()
