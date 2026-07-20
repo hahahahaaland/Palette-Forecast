@@ -1,186 +1,232 @@
-# Palette-Forecast
-Art Commerce Intelligence Platform.
+# 🎨 Palette Forecast
+### *Where Art Meets Intelligence.*
 
-# Palette Forecast
+Palette Forecast is a full-stack **Art Commerce Intelligence Platform** that transforms an art store into a data-driven business. Beyond simply managing artists, artworks, and customer orders, the platform uncovers valuable insights into customer preferences, popular artistic styles, revenue trends, and sales performance.
 
-## Art Commerce Intelligence Platform
-
-Palette Forecast is a backend REST API built using Flask and SQLite for managing an art marketplace. The platform allows users to manage artists, artworks, styles, mediums, and customer orders while providing business analytics to help identify sales trends and customer preferences.
-
-The project goes beyond basic CRUD operations by combining inventory management with analytics that can support business decision-making.
+Designed with a modern React frontend and a Flask-powered REST API, Palette Forecast demonstrates how business intelligence can be integrated into creative industries.
 
 ---
 
-# Features
+# 🌟 Project Highlights
 
-## Artist Management
+🎭 Manage talented artists and their portfolios.
 
-- Add new artists
-- View artist details
-- Update artist information
-- Delete artists
+🖼️ Maintain an inventory of artworks across multiple styles and mediums.
 
-## Artwork Management
+🛒 Record customized customer orders with premium options.
 
-- Manage artworks
-- Track artwork availability
-- Store artwork pricing
-- Associate artworks with artists, styles, and mediums
+📈 Generate meaningful analytics using **Pandas**.
 
-## Order Management
+⚡ Experience a responsive modern interface built with **React + Tailwind CSS**.
 
-- Create customer orders
-- Gift wrap support
-- Commission order support
-- Canvas finish selection
-- Frame selection
-- Custom artwork requests
+---
 
-## Analytics
+# ✨ Features
 
-- Revenue Summary
-- Top Selling Artist
-- Most Popular Style
-- Most Popular Medium
-- Artwork Status Summary
-- Gift Wrap Statistics
-- Commission Order Statistics
-- Dashboard Summary
+## 📊 Dashboard
+
+The dashboard provides a quick snapshot of the business.
+
+- Total Artists
+- Total Artworks
+- Total Orders
+- Total Revenue
+- Available Artworks
+- Sold Artworks
+
+---
+
+## 👩‍🎨 Artist Management
+
+Manage every artist connected with the brand.
+
+✔ View Artists
+
+✔ Add Artist
+
+✔ Edit Artist
+
+✔ Delete Artist
+
+Each artist stores:
+
+- Name
+- Specialization
+- Experience
+- Country
+
+---
+
+## 🖼 Artwork Management
+
+Maintain an organized artwork inventory.
+
+Each artwork stores:
+
+- Title
+- Artist
+- Style
+- Medium
+- Base Price
+- Availability Status
+
+Supported operations:
+
+- View Artwork
+- Add Artwork
+- Edit Artwork
+- Delete Artwork
+
+---
+
+## 🛍 Order Management
+
+Customers can personalize their purchases.
+
+Order details include:
+
+- Customer Name
+- Artwork
+- Size
+- Frame Type
+- Canvas Finish
+- Customization
+- Commission Order
+- Gift Wrap
+- Final Price
+- Order Date
+
+---
+
+# 📈 Business Analytics
+
+Instead of simply storing data, Palette Forecast analyzes it.
+
+Using **Pandas**, the application generates insights such as:
+
+💰 Total Revenue
+
+🎨 Most Popular Artist
+
+🖌 Most Popular Style
+
+🖼 Most Popular Medium
+
+📦 Artwork Status Distribution
+
+🎁 Gift Wrap Statistics
+
+✨ Commission Order Statistics
+
+These insights help understand customer preferences and business performance.
+
+---
+
+# 🛠 Technology Stack
+
+## Backend
+
+- Python
+- Flask
+- SQLite
+- Pandas
+- Flask-CORS
 
 ---
 
 ## Frontend
 
-The project also includes a React + Tailwind CSS frontend that connects to the Flask backend through REST APIs.
-
-### Technologies Used
-
-- React (Vite)
+- React
+- Vite
 - Tailwind CSS
 - Axios
-- React Router DOM
-
-### Frontend Features
-
-- Dashboard displaying business statistics
-- Artists page with artist listing
-- Artworks page with artwork inventory
-- Orders page displaying customer orders
-- Analytics page connected to backend analytics APIs
-- Responsive navigation using React Router
-- Customized pastel UI theme with a handwritten logo font
-- Integration with Flask REST APIs using Axios
-
-The frontend communicates with the backend running on Flask and dynamically displays data stored in the SQLite database.
-
-# Database Design
-
-The application uses SQLite with the following relational tables:
-
-- Artists
-- Styles
-- Mediums
-- Artworks
-- Orders
-
-Relationship Overview
-
-```
-Artist
-   │
-   ├──< Artworks >── Style
-   │          │
-   │          └── Medium
-   │
-   └──────── Orders
-```
 
 ---
 
-# Technology Stack
-
-- Python
-- Flask
-- SQLite
-- REST API
-- Postman
-- Git
-- GitHub
-
----
-
-# Project Structure
+# 📂 Project Structure
 
 ```
-Palette Forecast/
+Palette Forecast
 │
+├── frontend/
+│   ├── src/
+│   ├── components/
+│   ├── pages/
+│   └── services/
+│
+├── static/
+├── templates/
 ├── app.py
+├── analytics.py
 ├── config.py
 ├── db.py
 ├── models.py
 ├── seed.py
 ├── requirements.txt
-├── README.md
-│
-├── database/
-│   └── palette_forecast.db
-│
-└── .venv/
+└── README.md
 ```
 
 ---
 
-# Installation
+# 🚀 Getting Started
 
-Clone the repository
-
-```bash
-git clone https://github.com/hahahahaaland/Palette-Forecast.git
-```
-
-Navigate to the project directory
+## 1️⃣ Clone the Repository
 
 ```bash
+git clone <repository-url>
 cd Palette-Forecast
 ```
 
-Create a virtual environment
+---
 
-```bash
-python -m venv .venv
-```
-
-Activate the virtual environment
-
-Windows
-
-```bash
-.venv\Scripts\activate
-```
-
-Install the required packages
+## 2️⃣ Install Backend Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the application
+---
+
+## 3️⃣ Start Flask
 
 ```bash
 python app.py
 ```
 
+Backend runs on:
+
+```
+http://127.0.0.1:5000
+```
+
 ---
 
-# API Endpoints
+## 4️⃣ Start React Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs on:
+
+```
+http://localhost:5173
+```
+
+---
+
+# 🔌 API Endpoints
 
 ## Artists
 
 - GET /artists
-- GET /artists/{id}
 - POST /artists
 - PUT /artists/{id}
 - DELETE /artists/{id}
+
+---
 
 ## Artworks
 
@@ -189,67 +235,57 @@ python app.py
 - PUT /artworks/{id}
 - DELETE /artworks/{id}
 
+---
+
 ## Orders
 
 - GET /orders
 - POST /orders
-- PUT /orders/{id}
-- DELETE /orders/{id}
-
-## Styles
-
-- GET /styles
-- GET /styles/{id}
-- POST /styles
-- PUT /styles/{id}
-- DELETE /styles/{id}
-
-## Mediums
-
-- GET /mediums
-- GET /mediums/{id}
-- POST /mediums
-- PUT /mediums/{id}
-- DELETE /mediums/{id}
 
 ---
 
-# Analytics Endpoints
+## Analytics
 
-- GET /analytics/revenue
-- GET /analytics/top-artist
-- GET /analytics/top-style
-- GET /analytics/top-medium
-- GET /analytics/artwork-status
-- GET /analytics/gift-wrap
-- GET /analytics/commissions
-- GET /dashboard
-
----
-
-# Future Enhancements
-
-- JWT Authentication
-- User Accounts
-- Artwork Image Upload
-- Admin Dashboard
-- Sales Forecasting
-- Interactive Charts
-- Payment Gateway Integration
-- Email Notifications
+- /analytics/revenue
+- /analytics/top-artist
+- /analytics/top-style
+- /analytics/top-medium
+- /analytics/status
+- /analytics/gift-wrap
+- /analytics/commissions
 
 ---
 
-# Project Objective
+# 🎯 Learning Outcomes
 
-Palette Forecast demonstrates how backend systems can extend beyond basic CRUD operations by integrating inventory management with business analytics.
+This project demonstrates practical experience with:
 
-The project showcases relational database design, RESTful API development, SQL analytics, and clean backend architecture using Flask and SQLite.
+- REST API Development
+- CRUD Operations
+- Relational Database Design
+- SQL Joins
+- React State Management
+- Axios API Integration
+- Tailwind CSS
+- Data Analysis using Pandas
+- Full-Stack Application Development
 
 ---
 
-# Author
+# 💡 Future Improvements
+
+- Image upload for artworks
+- Artist profile pages
+- Search & filtering
+- Authentication & authorization
+- Sales forecasting
+- Interactive charts using Chart.js or Recharts
+- Export analytics reports to PDF/Excel
+
+---
+
+# 👨‍💻 Author
 
 **Nandani**
 
-Capstone Project developed using Flask, SQLite, REST APIs, and SQL Analytics.
+*"Creativity is an art. Intelligence is the masterpiece."* 🎨

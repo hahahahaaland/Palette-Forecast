@@ -68,14 +68,12 @@ def create_tables():
 
     print("Database schema created successfully!")
 
+
 def delete_artwork_by_id(artwork_id):
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute(
-        "DELETE FROM artworks WHERE artwork_id = ?",
-        (artwork_id,)
-    )
+    cursor.execute("DELETE FROM artworks WHERE artwork_id = ?", (artwork_id,))
 
     conn.commit()
 

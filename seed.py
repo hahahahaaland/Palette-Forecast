@@ -20,10 +20,13 @@ def seed_data():
         ("Portrait",),
     ]
 
-    cursor.executemany("""
+    cursor.executemany(
+        """
         INSERT OR IGNORE INTO styles(style_name)
         VALUES (?)
-    """, styles)
+    """,
+        styles,
+    )
 
     # Mediums
     mediums = [
@@ -39,10 +42,13 @@ def seed_data():
         ("Digital",),
     ]
 
-    cursor.executemany("""
+    cursor.executemany(
+        """
         INSERT OR IGNORE INTO mediums(medium_name)
         VALUES (?)
-    """, mediums)
+    """,
+        mediums,
+    )
 
     # Artists
     artists = [
@@ -58,11 +64,14 @@ def seed_data():
         ("Yuki Tanaka", "Surrealism", 13, "Japan"),
     ]
 
-    cursor.executemany("""
+    cursor.executemany(
+        """
         INSERT INTO artists
         (name, specialization, experience, country)
         VALUES (?, ?, ?, ?)
-    """, artists)
+    """,
+        artists,
+    )
 
     conn.commit()
     conn.close()
