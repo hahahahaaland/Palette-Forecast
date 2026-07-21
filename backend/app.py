@@ -67,12 +67,12 @@ def add_artist():
     name = data.get("name")
     specialization = data.get("specialization")
     experience = data.get("experience")
-    
+
     try:
         experience = int(experience)
     except (TypeError, ValueError):
         return {"error": "Experience must be a valid number."}, 400
-    
+
     country = data.get("country")
 
     if not name:
@@ -258,6 +258,7 @@ def update_artwork(artwork_id):
     conn.close()
 
     return jsonify({"message": "Artwork updated successfully"})
+
 
 @app.route("/artworks/<int:artwork_id>", methods=["DELETE"])
 def delete_artwork(artwork_id):
@@ -630,18 +631,13 @@ def delete_medium(medium_id):
 def revenue_analytics():
     conn = get_connection()
 
-    df = pd.read_sql_query(
-        "SELECT base_price FROM artworks",
-        conn
-    )
+    df = pd.read_sql_query("SELECT base_price FROM artworks", conn)
 
     conn.close()
 
     total_revenue = df["base_price"].sum()
 
-    return {
-        "total_revenue": float(total_revenue)
-    }
+    return {"total_revenue": float(total_revenue)}
 
 
 @app.route("/analytics/top-artist", methods=["GET"])
@@ -649,70 +645,73 @@ def top_artist():
 
     conn = get_connection()
 
-    df = pd.read_sql_query("""
+    df = pd.read_sql_query(
+        """
         SELECT artists.name
         FROM artworks
         JOIN artists
         ON artworks.artist_id = artists.artist_id
-    """, conn)
+    """,
+        conn,
+    )
 
     conn.close()
 
     top = df["name"].value_counts().idxmax()
 
-    return {
-        "top_artist": top
-    }
+    return {"top_artist": top}
+
 
 @app.route("/analytics/top-style", methods=["GET"])
 def top_style():
 
     conn = get_connection()
 
-    df = pd.read_sql_query("""
+    df = pd.read_sql_query(
+        """
         SELECT styles.style_name
         FROM artworks
         JOIN styles
         ON artworks.style_id = styles.style_id
-    """, conn)
+    """,
+        conn,
+    )
 
     conn.close()
 
     top = df["style_name"].value_counts().idxmax()
 
-    return {
-        "top_style": top
-    }
+    return {"top_style": top}
+
 
 @app.route("/analytics/top-medium", methods=["GET"])
 def top_medium():
 
     conn = get_connection()
 
-    df = pd.read_sql_query("""
+    df = pd.read_sql_query(
+        """
         SELECT mediums.medium_name
         FROM artworks
         JOIN mediums
         ON artworks.medium_id = mediums.medium_id
-    """, conn)
+    """,
+        conn,
+    )
 
     conn.close()
 
     top = df["medium_name"].value_counts().idxmax()
 
-    return {
-        "top_medium": top
-    }
+    return {"top_medium": top}
+
 
 @app.route("/analytics/status", methods=["GET"])
 def artwork_status():
 
     conn = get_connection()
 
-    df = pd.read_sql_query(
-        "SELECT status FROM artworks",
-        conn
-    )
+    df = pd.read_sql_query("SELECT status FROM artworks", conn)
 
     conn.close()
 
@@ -725,10 +724,7 @@ def artwork_status():
 def gift_wrap_statistics():
     conn = get_connection()
 
-    df = pd.read_sql_query(
-        "SELECT gift_wrap FROM orders",
-        conn
-    )
+    df = pd.read_sql_query("SELECT gift_wrap FROM orders", conn)
 
     conn.close()
 
@@ -736,14 +732,12 @@ def gift_wrap_statistics():
 
     return jsonify(result)
 
+
 @app.route("/analytics/commissions", methods=["GET"])
 def commission_statistics():
     conn = get_connection()
 
-    df = pd.read_sql_query(
-        "SELECT commission_order FROM orders",
-        conn
-    )
+    df = pd.read_sql_query("SELECT commission_order FROM orders", conn)
 
     conn.close()
 
@@ -801,6 +795,7 @@ def dashboard():
             "sold_artworks": sold_artworks,
         }
     )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

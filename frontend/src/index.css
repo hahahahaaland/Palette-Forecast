@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+    --color-navy: #172554;
+    --color-navy-soft: #1d4ed8;
+    --color-babypink: #ffe4e6;
+    --color-babypink-deep: #fb7185;
+    --color-babypink-soft: #fda4af;
+}
+
 .logo-font {
     font-family: "Handlee", cursive;
+}
+
+.hand-font {
+    font-family: "Architects Daughter", cursive;
 }
