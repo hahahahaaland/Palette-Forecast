@@ -33,7 +33,8 @@ The dashboard provides a quick snapshot of the business.
 - Total Revenue
 - Available Artworks
 - Sold Artworks
-<img width="960" height="504" alt="Screenshot 2026-07-21 162945" src="https://github.com/user-attachments/assets/8867aef7-2dbf-4edb-8906-a831fcec6e39" />
+<img width="960" height="504" alt="Screenshot 2026-07-22 003513" src="https://github.com/user-attachments/assets/e1aceb82-0712-447f-9d44-c733c059ec56" />
+
 
 ---
 
@@ -123,7 +124,11 @@ Gift Wrap Statistics
 Commission Order Statistics
 
 These insights help understand customer preferences and business performance.
-<img width="960" height="504" alt="Screenshot 2026-07-21 163044" src="https://github.com/user-attachments/assets/96f2769c-6396-4ebb-b1c4-8b42ff3b7b39" />
+<img width="960" height="504" alt="Screenshot 2026-07-22 003531" src="https://github.com/user-attachments/assets/ce51274d-32c4-4ea7-9839-a9b6b2dff998" />
+
+<img width="960" height="504" alt="Screenshot 2026-07-22 003548" src="https://github.com/user-attachments/assets/c08af7ff-15eb-488c-b44d-c72a32aa6cdf" />
+
+
 
 ---
 
