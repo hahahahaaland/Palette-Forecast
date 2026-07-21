@@ -7,23 +7,23 @@ Designed with a modern React frontend and a Flask-powered REST API, Palette Fore
 
 ---
 
-# 🌟 Project Highlights
+# Project Highlights
 
-🎭 Manage talented artists and their portfolios.
+ Manage talented artists and their portfolios.
 
-🖼️ Maintain an inventory of artworks across multiple styles and mediums.
+ Maintain an inventory of artworks across multiple styles and mediums.
 
-🛒 Record customized customer orders with premium options.
+ Record customized customer orders with premium options.
 
-📈 Generate meaningful analytics using **Pandas**.
+ Generate meaningful analytics using **Pandas**.
 
-⚡ Experience a responsive modern interface built with **React + Tailwind CSS**.
+ Experience a responsive modern interface built with **React + Tailwind CSS**.
 
 ---
 
-# ✨ Features
+# Features
 
-## 📊 Dashboard
+## Dashboard
 
 The dashboard provides a quick snapshot of the business.
 
@@ -36,7 +36,7 @@ The dashboard provides a quick snapshot of the business.
 
 ---
 
-## 👩‍🎨 Artist Management
+## Artist Management
 
 Manage every artist connected with the brand.
 
@@ -57,7 +57,7 @@ Each artist stores:
 
 ---
 
-## 🖼 Artwork Management
+## Artwork Management
 
 Maintain an organized artwork inventory.
 
@@ -79,7 +79,7 @@ Supported operations:
 
 ---
 
-## 🛍 Order Management
+##  Order Management
 
 Customers can personalize their purchases.
 
@@ -98,31 +98,31 @@ Order details include:
 
 ---
 
-# 📈 Business Analytics
+# Business Analytics
 
 Instead of simply storing data, Palette Forecast analyzes it.
 
 Using **Pandas**, the application generates insights such as:
 
-💰 Total Revenue
+Total Revenue
 
-🎨 Most Popular Artist
+Most Popular Artist
 
-🖌 Most Popular Style
+Most Popular Style
 
-🖼 Most Popular Medium
+ Most Popular Medium
 
-📦 Artwork Status Distribution
+ Artwork Status Distribution
 
-🎁 Gift Wrap Statistics
+Gift Wrap Statistics
 
-✨ Commission Order Statistics
+Commission Order Statistics
 
 These insights help understand customer preferences and business performance.
 
 ---
 
-# 🛠 Technology Stack
+# Technology Stack
 
 ## Backend
 
@@ -143,7 +143,7 @@ These insights help understand customer preferences and business performance.
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```
 Palette Forecast
@@ -168,9 +168,9 @@ Palette Forecast
 
 ---
 
-# 🚀 Getting Started
+# Getting Started
 
-## 1️⃣ Clone the Repository
+## Clone the Repository
 
 ```bash
 git clone <repository-url>
@@ -179,7 +179,7 @@ cd Palette-Forecast
 
 ---
 
-## 2️⃣ Install Backend Dependencies
+## Install Backend Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -187,7 +187,7 @@ pip install -r requirements.txt
 
 ---
 
-## 3️⃣ Start Flask
+## Start Flask
 
 ```bash
 python app.py
@@ -201,7 +201,7 @@ http://127.0.0.1:5000
 
 ---
 
-## 4️⃣ Start React Frontend
+## Start React Frontend
 
 ```bash
 cd frontend
@@ -217,7 +217,7 @@ http://localhost:5173
 
 ---
 
-# 🔌 API Endpoints
+# API Endpoints
 
 ## Artists
 
@@ -256,7 +256,7 @@ http://localhost:5173
 
 ---
 
-# 🎯 Learning Outcomes
+# Learning Outcomes
 
 This project demonstrates practical experience with:
 
@@ -272,7 +272,7 @@ This project demonstrates practical experience with:
 
 ---
 
-# 💡 Future Improvements
+# Future Improvements
 
 - Image upload for artworks
 - Artist profile pages
@@ -284,8 +284,8 @@ This project demonstrates practical experience with:
 
 ---
 
-# 👨‍💻 Author
+# Author
 
 **Nandani**
 
-*"Creativity is an art. Intelligence is the masterpiece."* 🎨
+*"Creativity is an art. Intelligence is the masterpiece."* 

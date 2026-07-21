@@ -2,8 +2,16 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from db import get_connection
 import pandas as pd
+import os
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(PROJECT_ROOT, "templates"),
+    static_folder=os.path.join(PROJECT_ROOT, "static"),
+)
 CORS(app)
 
 
@@ -793,7 +801,6 @@ def dashboard():
             "sold_artworks": sold_artworks,
         }
     )
-
 
 if __name__ == "__main__":
     app.run(debug=True)
