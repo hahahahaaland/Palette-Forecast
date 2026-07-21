@@ -136,7 +136,8 @@ Run the tests using:
 ```bash
 python -m pytest
 
-# Technology Stack
+
+**# Technology Stack**
 
 ## Backend
 
