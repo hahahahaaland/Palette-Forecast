@@ -1,4 +1,4 @@
-# 🎨 Palette Forecast
+# Palette Forecast
 ### *Where Art Meets Intelligence.*
 
 Palette Forecast is a full-stack **Art Commerce Intelligence Platform** that transforms an art store into a data-driven business. Beyond simply managing artists, artworks, and customer orders, the platform uncovers valuable insights into customer preferences, popular artistic styles, revenue trends, and sales performance.
@@ -33,6 +33,7 @@ The dashboard provides a quick snapshot of the business.
 - Total Revenue
 - Available Artworks
 - Sold Artworks
+<img width="960" height="504" alt="Screenshot 2026-07-21 162945" src="https://github.com/user-attachments/assets/8867aef7-2dbf-4edb-8906-a831fcec6e39" />
 
 ---
 
@@ -54,6 +55,7 @@ Each artist stores:
 - Specialization
 - Experience
 - Country
+<img width="960" height="504" alt="Screenshot 2026-07-21 163007" src="https://github.com/user-attachments/assets/97ae1aa2-5c64-40d2-b1ed-4f8335b266a6" />
 
 ---
 
@@ -76,6 +78,7 @@ Supported operations:
 - Add Artwork
 - Edit Artwork
 - Delete Artwork
+<img width="960" height="504" alt="Screenshot 2026-07-21 163020" src="https://github.com/user-attachments/assets/8c88f003-db88-400f-b75d-ed069ece5bec" />
 
 ---
 
@@ -95,6 +98,7 @@ Order details include:
 - Gift Wrap
 - Final Price
 - Order Date
+<img width="960" height="504" alt="Screenshot 2026-07-21 163032" src="https://github.com/user-attachments/assets/3813668f-f665-4ecc-87c3-8cf59edeec3c" />
 
 ---
 
@@ -119,8 +123,18 @@ Gift Wrap Statistics
 Commission Order Statistics
 
 These insights help understand customer preferences and business performance.
+<img width="960" height="504" alt="Screenshot 2026-07-21 163044" src="https://github.com/user-attachments/assets/96f2769c-6396-4ebb-b1c4-8b42ff3b7b39" />
 
 ---
+
+## Unit Testing
+
+The backend includes automated tests written using **Pytest** to verify the application's core functionality. The test suite covers CRUD operations for artists and artworks, along with dashboard and analytics endpoints, helping ensure the API behaves as expected after changes.
+
+Run the tests using:
+
+```bash
+python -m pytest
 
 # Technology Stack
 
