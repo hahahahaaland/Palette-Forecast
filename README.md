@@ -303,4 +303,3 @@ This project demonstrates practical experience with:
 
 **Nandani**
 
-*"Creativity is an art. Intelligence is the masterpiece."* 
